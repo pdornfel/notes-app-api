@@ -1,0 +1,22 @@
+COGNITO
+  user pool
+   client app
+      app client id
+      6au68e228ah0c3a6s0ligvspk4
+
+  create a user
+
+  aws cognito-idp sign-up \
+  --region us-east-1 \
+  --client-id  6au68e228ah0c3a6s0ligvspk4 \
+  --username admin@example.com \
+  --password Passw0rd! \
+  --profile mullen-tests
+
+  aws cognito-idp admin-confirm-sign-up \
+  --region us-east-1 \
+  --user-pool-id us-east-1_HKJe1Omwz \
+  --username admin@example.com \
+  --profile mullen-tests
+
+SERVERLESS
