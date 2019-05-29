@@ -32,3 +32,54 @@ COGNITO USER POOL
 
   identity pool id: us-east-1:f60cd9ca-3aa7-4a74-aaa0-4f0ff0af538c
   arn: arn:aws:cognito-identity:us-east-1:321954783258:identitypool/us-east-1:f60cd9ca-3aa7-4a74-aaa0-4f0ff0af538c
+
+
+TESTING
+
+  npx aws-api-gateway-cli-test \
+  --username='admin@example.com' \
+  --password='Passw0rd!' \
+  --user-pool-id='us-east-1_HKJe1Omwz' \
+  --app-client-id='6au68e228ah0c3a6s0ligvspk4' \
+  --cognito-region='us-east-1' \
+  --identity-pool-id='us-east-1:5ed5e76f-b8ae-429d-a17e-24ede6b75f76' \
+  --invoke-url='https://pid9rhq6sd.execute-api.us-east-1.amazonaws.com/prod' \
+  --api-gateway-region='us-east-1' \
+  --path-template='/notes' \
+  --method='POST' \
+  --body='{"content":"hey dave","attachment":"hello.jpg"}'
+
+  {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "mobileanalytics:PutEvents",
+          "cognito-sync:*",
+          "cognito-identity:*"
+        ],
+        "Resource": [
+          "*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "s3:*"
+        ],
+        "Resource": [
+          "arn:aws:s3:::notes-app-uploads-ml/private/${cognito-identity.amazonaws.com:sub}/*"
+        ]
+      },
+      {
+        "Effect": "Allow",
+        "Action": [
+          "execute-api:Invoke"
+        ],
+        "Resource": [
+          "arn:aws:execute-api:us-east-1:*:pid9rhq6sd/*/*/*"
+        ]
+      }
+    ]
+  }
